@@ -22,5 +22,35 @@
     <p><strong>Search Snippet:</strong> {{ book.searchInfo.textSnippet }}</p>
     <p><strong>Viewability:</strong> {{ book.accessInfo.viewability }}</p>
     <p><strong>Web Reader Link:</strong> <a href="{{ book.accessInfo.webReaderLink }}" target="_blank">Read Online</a></p>
+    {% if user.is_authenticated %}
+    {% comment %} <button id="toggle-favorite-btn">Add to Favorites</button> {% endcomment %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add to Favorites</button>
+      </form>
+    {% else %}
+    <p>Please <a href="{% url 'login_page' %}">log in</a> to add this book to favorites.</p>
+    {% endif %}
+<script>
+document.getElementById('toggle-favorite-btn').addEventListener('click', function() {
+    var bookId = "{{ book.id }}"; // Assuming book ID is available in the template
+    fetch(`/toggle_favorite/${bookId}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}', // Ensure you include CSRF token
+            'Content-Type': 'application/json',
+        },
+        credentials: 'same-origin',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message); // Display success message
+        // Update button text or UI as needed
+    })
+    .catch(error => console.error(error));
+});
+</script>
 </body>
+
 </html>
