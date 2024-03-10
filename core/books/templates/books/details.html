@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+</head>
+<body>
+    <h1>{{ book.volumeInfo.title }}</h1>
+    <p><strong>Published Date:</strong> {{ book.volumeInfo.publishedDate }}</p>
+    <p><strong>Description:</strong> {{ book.volumeInfo.description }}</p>
+    <p><strong>Page Count:</strong> {{ book.volumeInfo.pageCount }}</p>
+    <p><strong>Print Type:</strong> {{ book.volumeInfo.printType }}</p>
+    <p><strong>Average Rating:</strong> {{ book.volumeInfo.averageRating }}</p>
+    <p><strong>Ratings Count:</strong> {{ book.volumeInfo.ratingsCount }}</p>
+    <p><strong>Language:</strong> {{ book.volumeInfo.language }}</p>
+    <p><strong>Preview Link:</strong> <a href="{{ book.volumeInfo.previewLink }}" target="_blank">Preview</a></p>
+    <p><strong>Info Link:</strong> <a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info</a></p>
+    <p><strong>Canonical Volume Link:</strong> <a href="{{ book.volumeInfo.canonicalVolumeLink }}" target="_blank">View on Google Books</a></p>
+    <p><strong>Small Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" alt="Small Thumbnail"></p>
+    <p><strong>Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="Thumbnail"></p>
+    <p><strong>Search Snippet:</strong> {{ book.searchInfo.textSnippet }}</p>
+    <p><strong>Viewability:</strong> {{ book.accessInfo.viewability }}</p>
+    <p><strong>Web Reader Link:</strong> <a href="{{ book.accessInfo.webReaderLink }}" target="_blank">Read Online</a></p>
+</body>
+</html>

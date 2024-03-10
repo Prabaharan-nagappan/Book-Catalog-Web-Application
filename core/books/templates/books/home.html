@@ -6,8 +6,8 @@
     <title>Home</title>
 </head>
 <body>
-    <h2>Books</h2>
-    <form method="get" action="{% url 'books' %}">
+    <h2>Books on Science</h2>
+    <form method="get" action="{% url 'home' %}">
         <input type="text" name="q" placeholder="Search for books...">
         <button type="submit">Search</button>
     </form>
@@ -16,7 +16,9 @@
     {% else %}
         <ul>
             {% for book in books %}
-                <li>{{ book.volumeInfo.title }}</li>
+                <li>
+                    <a href="{% url 'book_details' book.id %}">{{ book.volumeInfo.title }}</a>
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
