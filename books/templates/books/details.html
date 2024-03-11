@@ -4,53 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #4d2600;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            margin: 10px 0;
+        }
+        strong {
+            font-weight: bold;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            border-radius: 5px;
+        }
+        a {
+            color: #4d2600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #4d2600;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button[type="submit"]:hover {
+            background-color: #642b00;
+        }
+        .login-message {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{ book.volumeInfo.title }}</h1>
-    <p><strong>Published Date:</strong> {{ book.volumeInfo.publishedDate }}</p>
-    <p><strong>Description:</strong> {{ book.volumeInfo.description }}</p>
-    <p><strong>Page Count:</strong> {{ book.volumeInfo.pageCount }}</p>
-    <p><strong>Print Type:</strong> {{ book.volumeInfo.printType }}</p>
-    <p><strong>Average Rating:</strong> {{ book.volumeInfo.averageRating }}</p>
-    <p><strong>Ratings Count:</strong> {{ book.volumeInfo.ratingsCount }}</p>
-    <p><strong>Language:</strong> {{ book.volumeInfo.language }}</p>
-    <p><strong>Preview Link:</strong> <a href="{{ book.volumeInfo.previewLink }}" target="_blank">Preview</a></p>
-    <p><strong>Info Link:</strong> <a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info</a></p>
-    <p><strong>Canonical Volume Link:</strong> <a href="{{ book.volumeInfo.canonicalVolumeLink }}" target="_blank">View on Google Books</a></p>
-    <p><strong>Small Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" alt="Small Thumbnail"></p>
-    <p><strong>Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="Thumbnail"></p>
-    <p><strong>Search Snippet:</strong> {{ book.searchInfo.textSnippet }}</p>
-    <p><strong>Viewability:</strong> {{ book.accessInfo.viewability }}</p>
-    <p><strong>Web Reader Link:</strong> <a href="{{ book.accessInfo.webReaderLink }}" target="_blank">Read Online</a></p>
-    {% if user.is_authenticated %}
-    {% comment %} <button id="toggle-favorite-btn">Add to Favorites</button> {% endcomment %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Add to Favorites</button>
-      </form>
-    {% else %}
-    <p>Please <a href="{% url 'login_page' %}">log in</a> to add this book to favorites.</p>
-    {% endif %}
-<script>
-document.getElementById('toggle-favorite-btn').addEventListener('click', function() {
-    var bookId = "{{ book.id }}"; // Assuming book ID is available in the template
-    fetch(`/toggle_favorite/${bookId}`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}', // Ensure you include CSRF token
-            'Content-Type': 'application/json',
-        },
-        credentials: 'same-origin',
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.message); // Display success message
-        // Update button text or UI as needed
-    })
-    .catch(error => console.error(error));
-});
-</script>
+    <div class="container">
+        <h1>{{ book.volumeInfo.title }}</h1>
+        <p><strong>Published Date:</strong> {{ book.volumeInfo.publishedDate }}</p>
+        <p><strong>Description:</strong> {{ book.volumeInfo.description }}</p>
+        <p><strong>Page Count:</strong> {{ book.volumeInfo.pageCount }}</p>
+        <p><strong>Print Type:</strong> {{ book.volumeInfo.printType }}</p>
+        <p><strong>Average Rating:</strong> {{ book.volumeInfo.averageRating }}</p>
+        <p><strong>Ratings Count:</strong> {{ book.volumeInfo.ratingsCount }}</p>
+        <p><strong>Language:</strong> {{ book.volumeInfo.language }}</p>
+        <p><strong>Preview Link:</strong> <a href="{{ book.volumeInfo.previewLink }}" target="_blank">Preview</a></p>
+        <p><strong>Info Link:</strong> <a href="{{ book.volumeInfo.infoLink }}" target="_blank">More Info</a></p>
+        <p><strong>Canonical Volume Link:</strong> <a href="{{ book.volumeInfo.canonicalVolumeLink }}" target="_blank">View on Google Books</a></p>
+        <p><strong>Small Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.smallThumbnail }}" alt="Small Thumbnail"></p>
+        <p><strong>Thumbnail:</strong> <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="Thumbnail"></p>
+        <p><strong>Search Snippet:</strong> {{ book.searchInfo.textSnippet }}</p>
+        <p><strong>Viewability:</strong> {{ book.accessInfo.viewability }}</p>
+        <p><strong>Web Reader Link:</strong> <a href="{{ book.accessInfo.webReaderLink }}" target="_blank">Read Online</a></p>
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Add to Favorites</button>
+            </form>
+        {% else %}
+            <p class="login-message">Please <a href="{% url 'login_page' %}">log in</a> to add this book to favorites.</p>
+        {% endif %}
+    </div>
 </body>
-
 </html>

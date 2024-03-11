@@ -4,9 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        h2 {
+            color: #4d2600;
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 5px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #4d2600;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li {
+            margin: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        a {
+            color: #4d2600;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+        }
+        p {
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <h2>Books on Science</h2>
+    <h2>Books</h2>
     <form method="get" action="{% url 'books' %}">
         <input type="text" name="q" placeholder="Search for books...">
         <button type="submit">Search</button>
@@ -17,7 +82,9 @@
         <ul>
             {% for book in books %}
                 <li>
-                    <a href="{% url 'book_details' book.id %}">{{ book.volumeInfo.title }}</a>
+                    <a href="{% url 'book_details' book.id %}">{{ book.volumeInfo.title }}
+                    <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" alt="Book Cover">
+                    <p>{{ book.volumeInfo.description }}</p></a>
                 </li>
             {% endfor %}
         </ul>
